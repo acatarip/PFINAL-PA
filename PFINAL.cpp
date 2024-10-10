@@ -12,12 +12,11 @@ struct INFORMACION{
 INFORMACION producto[100];
 int Indice = 0;
 
-<<<<<<< HEAD
 void ordenacion();
 void agregarProducto(INFORMACION producto[], int &Indice);
 void mostrarProducto (INFORMACION producto[], int Indice);
-void buscarProducto (INFORMACION producto[], int m);
-void eliminarProducto (INFORMACION producto[], int &m);
+int buscarProducto (INFORMACION producto[], int &Indice);
+void eliminarProducto (INFORMACION producto[], int &Indice);
 
 void agregarProducto(INFORMACION producto[], int &Indice)
 {
@@ -65,22 +64,7 @@ void agregarProducto(INFORMACION producto[], int &Indice)
 		
 		
 	}
-	
-	
-	
-	ordenacion();
-=======
-void Ordenacion();
-void agregarProducto(INFORMACION producto[], int &m, int b);
-void mostrarProducto (INFORMACION producto[], int m);
-int buscarProducto (INFORMACION producto[], int &Indice);
-void eliminarProducto (INFORMACION producto[], int &Indice);
-
-void agregarProducto(INFORMACION producto[], int &m, int b)
-{
-	
->>>>>>> dd8cf6c9ac46099991ec7f7e9c115ba6b0f8a149
-}
+}	
 
 void mostrarProducto (INFORMACION producto[], int Indice)
 {
@@ -133,11 +117,10 @@ int buscarProducto (INFORMACION producto[], int &Indice)
 		cout << "-----------------------------------------------------" << endl;
 		cout << " Ingrese su opcion: ";
 		cin >> opcion;
-		
+		string nom;
 		switch (opcion)
 		{
 			case 1:
-				string nom;
 				cout << "================= BUSCAR POR NOMBRE ===================" << endl;
 				cout << " Ingrese el nombre del producto: ";
 				cin >> nom;
@@ -199,15 +182,9 @@ int main(){
 		cout << "                        MENU" << endl;
 		cout << "=====================================================" << endl;
 		cout << " 1. Agregar producto" << endl;
-<<<<<<< HEAD
-		cout << " 2. Mostrar productos" << endl;
-		cout << " 3. Buscar usuario" << endl;
-		cout << " 4. Eliminar usuario" << endl;
-=======
-		cout << " 2. Mostar producto" << endl;
+		cout << " 2. Mostrar producto" << endl;
 		cout << " 3. Buscar producto" << endl;
 		cout << " 4. Eliminar producto" << endl;
->>>>>>> dd8cf6c9ac46099991ec7f7e9c115ba6b0f8a149
 		cout << " 0. Salir" << endl;
 		cout << "-----------------------------------------------------" << endl;
 		cout << " Ingrese su opcion: ";
@@ -215,18 +192,10 @@ int main(){
 		
 		switch (opcion){
 			case 1:
-<<<<<<< HEAD
 				agregarProducto(producto, Indice);
 			break;
 			case 2:
 				mostrarProducto (producto, Indice);
-
-=======
-				agregarProducto();
-			break;
-			case 2:
-				mostrarProducto();
->>>>>>> dd8cf6c9ac46099991ec7f7e9c115ba6b0f8a149
 			break;
 			case 3:
 				buscarProducto(producto, Indice);
