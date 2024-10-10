@@ -15,8 +15,8 @@ int Indice = 0;
 void Ordenacion();
 void agregarProducto(INFORMACION producto[], int &m, int b);
 void mostrarProducto (INFORMACION producto[], int m);
-void buscarProducto (INFORMACION producto[], int m);
-void eliminarProducto (INFORMACION producto[], int &m);
+int buscarProducto (INFORMACION producto[], int &Indice);
+void eliminarProducto (INFORMACION producto[], int &Indice);
 
 void agregarProducto(INFORMACION producto[], int &m, int b)
 {
@@ -28,26 +28,101 @@ void mostrarProducto (INFORMACION producto[], int m)
 
 }
 
-void buscarProducto (INFORMACION producto[], int m)
+int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto)
 {
-
+	bool encontrado = false;
+	int medio;
+	while (bajo <= alto && !encontrado)
+	{
+		medio = (bajo + alto) / 2;
+		if (producto[medio].nombre == nom)
+		{
+			encontrado = true;
+		}
+		else if (producto[medio].nombre > nom)
+		{
+			alto = medio - 1;
+		}
+		else
+		{
+			bajo = medio + 1;
+		}
+	}
+	if (encontrado)
+	return medio;
+	else 
+	return -1;
 }
 
+int buscarProducto (INFORMACION producto[], int &Indice)
+{
+	int opcion;
+	do 
+	{
+		system("cls");
+		cout << "================= BUSCAR PRODUCTO ===================" << endl;
+		cout << " 1. Buscar por nombre " << endl;
+		cout << " 2. Buscar por ID " << endl;
+		cout << " 0. Salir " << endl;
+		cout << "-----------------------------------------------------" << endl;
+		cout << " Ingrese su opcion: ";
+		cin >> opcion;
+		
+		switch (opcion)
+		{
+			case 1:
+				string nom;
+				cout << "================= BUSCAR POR NOMBRE ===================" << endl;
+				cout << " Ingrese el nombre del producto: ";
+				cin >> nom;
+				cout << "-----------------------------------------------------" << endl;
+				int indice = BusquedaBinaria(producto, nom, 0, Indice);
+				if (indice != -1)
+				{
+					cout << "Producto encontrado." << endl;
+					cout << "Nombre: " << producto[indice].nombre << endl;
+					cout << "Descripcion: " << producto[indice].descripcion << endl;
+					cout << "Precio: " << producto[indice].precio << endl;
+					cout << "Cantidad: " << producto[indice].cantidad << endl;
+				}
+				else
+				{
+					cout << "Producto no encontrado." << endl;
+				}
+				
+			break;
+			case 2:
 
-void buscarProducto (INFORMACION producto[], int m){
-	system("cls");
-	int buscar;
-	cout<<"        BUSCAR USUARIO\n";
-	cout<<"1. Buscar por nombre\n";
-	cout<<"2. Buscar por edad\n";
-	cout<<"0. Salir\n\n";
-	cout<<"Ingrese su opcion: ";
-	cin>>buscar;
-	
+			break;
+			case 0:
+				cout << "Saliendo . . ." << endl;
+			break;
+			default:
+				cout << "Opcion no valida. Intentelo de nuevo." << endl;
+				system("pause");
+			break;
+		}
+	} while (opcion != 0);
 }
 
-void eliminarProducto (INFORMACION producto[], int &m){
-	
+void eliminarProducto (INFORMACION producto[], int &Indice)
+{
+	int posicion;
+	cout << "================= ELIMINAR PRODUCTO ===================" << endl;
+	cout << "Ingrese la poscion del producto que desea eliminar: ";
+	cin >> posicion;
+	if (posicion > 0 && posicion <= Indice)
+	{
+		Indice--;
+		for (int i = posicion; i < Indice; i++)
+		{
+			producto[i] = producto[i + 1];
+		}
+	}
+	else
+	{
+		cout << "Posicion invalida. Intentelo de nuevo." << endl;
+	}
 }
 
 int main(){
@@ -57,10 +132,10 @@ int main(){
 		cout << "=====================================================" << endl;
 		cout << "                        MENU" << endl;
 		cout << "=====================================================" << endl;
-		cout << " 1. Agregar usuario" << endl;
-		cout << " 2. Usuarios registrados" << endl;
-		cout << " 3. Buscar usuario" << endl;
-		cout << " 4. Eliminar usuario" << endl;
+		cout << " 1. Agregar producto" << endl;
+		cout << " 2. Mostar producto" << endl;
+		cout << " 3. Buscar producto" << endl;
+		cout << " 4. Eliminar producto" << endl;
 		cout << " 0. Salir" << endl;
 		cout << "-----------------------------------------------------" << endl;
 		cout << " Ingrese su opcion: ";
@@ -68,15 +143,17 @@ int main(){
 		
 		switch (opcion){
 			case 1:
-				
+				agregarProducto();
 			break;
 			case 2:
-
+				mostrarProducto();
 			break;
 			case 3:
-
+				buscarProducto(producto, Indice);
+				break;
 			case 4:
-
+				eliminarProducto(producto, Indice);
+				break;
 			break;
 			case 0:
 				cout << "Saliendo . . ." << endl;
