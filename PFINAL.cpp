@@ -9,18 +9,18 @@ struct INFORMACION{
 	int cantidad;
 };
 
-INFORMACION producto[100];  //arreglo de datos principal
-int m = 0;  //contador de pacientes totales registrados
+INFORMACION producto[100];
+int Indice = 0;
 
+void Ordenacion();
 void agregarProducto(INFORMACION producto[], int &m, int b);
 void mostrarProducto (INFORMACION producto[], int m);
 void buscarProducto (INFORMACION producto[], int m);
 void eliminarProducto (INFORMACION producto[], int &m);
 
-
 void agregarProducto(INFORMACION producto[], int &m, int b)
 {
-
+	
 }
 
 void mostrarProducto (INFORMACION producto[], int m)
