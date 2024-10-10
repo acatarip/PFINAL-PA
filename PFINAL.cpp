@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 struct DATOS{
@@ -61,14 +62,17 @@ int main(){
 	int opcion;
 	do{
 		system("cls");
-		cout<<"        MENU\n";
-		cout<<"1. Agregar usuario\n";
-		cout<<"2. Usuarios registrados\n";
-		cout<<"3. Buscar usuario\n";
-		cout<<"4. Eliminar usuario\n";
-		cout<<"0. Salir\n\n";
-		cout<<"Ingrese su opcion: ";
-		cin>>opcion;
+		cout << "=====================================================" << endl;
+		cout <<"                         MENU" << endl;
+		cout << "=====================================================" << endl;
+		cout << " 1. Agregar usuario" << endl;
+		cout << " 2. Usuarios registrados" << endl;
+		cout << " 3. Buscar usuario" << endl;
+		cout << " 4. Eliminar usuario" << endl;
+		cout << " 0. Salir" << endl;
+		cout << "-----------------------------------------------------" << endl;
+		cout << " Ingrese su opcion: ";
+		cin >> opcion;
 		
 		switch (opcion){
 			case 1:
