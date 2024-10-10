@@ -12,10 +12,11 @@ struct INFORMACION{
 INFORMACION producto[100];
 int Indice = 0;
 
+int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto);
 void ordenacion();
 void agregarProducto(INFORMACION producto[], int &Indice);
 void mostrarProducto (INFORMACION producto[], int Indice);
-int buscarProducto (INFORMACION producto[], int &Indice);
+void buscarProducto (INFORMACION producto[], int &Indice);
 void eliminarProducto (INFORMACION producto[], int &Indice);
 
 void agregarProducto(INFORMACION producto[], int &Indice)
@@ -43,7 +44,7 @@ void agregarProducto(INFORMACION producto[], int &Indice)
 				encontrado = true;
 				cout<<"Ingrese cantidad: ";  //Si se repite, solo ingresa cantidad.
 				cin>> cantidadTemp;
-				producto[i].cantidad = producto[i].cantidad + cantidadTemp;
+				producto[i].cantidad = producto[j].cantidad + cantidadTemp; // cambie i por j 
 			}
 		}
 		
@@ -104,7 +105,7 @@ int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto)
 	return -1;
 }
 
-int buscarProducto (INFORMACION producto[], int &Indice)
+void buscarProducto (INFORMACION producto[], int &Indice)
 {
 	int opcion;
 	do 
@@ -118,6 +119,8 @@ int buscarProducto (INFORMACION producto[], int &Indice)
 		cout << " Ingrese su opcion: ";
 		cin >> opcion;
 		string nom;
+		int encontrado = -1;
+		
 		switch (opcion)
 		{
 			case 1:
@@ -125,14 +128,14 @@ int buscarProducto (INFORMACION producto[], int &Indice)
 				cout << " Ingrese el nombre del producto: ";
 				cin >> nom;
 				cout << "-----------------------------------------------------" << endl;
-				int indice = BusquedaBinaria(producto, nom, 0, Indice);
-				if (indice != -1)
+				encontrado = BusquedaBinaria(producto, nom, 0, Indice);
+				if (encontrado != -1)
 				{
 					cout << "Producto encontrado." << endl;
-					cout << "Nombre: " << producto[indice].nombre << endl;
-					cout << "Descripcion: " << producto[indice].descripcion << endl;
-					cout << "Precio: " << producto[indice].precio << endl;
-					cout << "Cantidad: " << producto[indice].cantidad << endl;
+					cout << "Nombre: " << producto[encontrado].nombre << endl;
+					cout << "Descripcion: " << producto[encontrado].descripcion << endl;
+					cout << "Precio: " << producto[encontrado].precio << endl;
+					cout << "Cantidad: " << producto[encontrado].cantidad << endl;
 				}
 				else
 				{
@@ -141,7 +144,7 @@ int buscarProducto (INFORMACION producto[], int &Indice)
 				
 			break;
 			case 2:
-
+				cout << "hola" << endl; //relleno
 			break;
 			case 0:
 				cout << "Saliendo . . ." << endl;
@@ -160,7 +163,7 @@ void eliminarProducto (INFORMACION producto[], int &Indice)
 	cout << "================= ELIMINAR PRODUCTO ===================" << endl;
 	cout << "Ingrese la poscion del producto que desea eliminar: ";
 	cin >> posicion;
-	if (posicion > 0 && posicion <= Indice)
+	if (posicion >= 0 && posicion < Indice)
 	{
 		Indice--;
 		for (int i = posicion; i < Indice; i++)
