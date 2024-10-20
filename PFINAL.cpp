@@ -5,7 +5,7 @@ using namespace std;
 struct INFORMACION{
 	string nombre;
 	string descripcion;
-	float precio;
+	int ID;
 	int cantidad;
 };
 
@@ -13,9 +13,9 @@ INFORMACION producto[100];
 int Indice = 0;
 
 int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto);
-void ordenacion();
+void ordenacion(INFORMACION producto[], int &Indice);
 void agregarProducto(INFORMACION producto[], int &Indice);
-void mostrarProducto (INFORMACION producto[], int Indice);
+void mostrarProducto (INFORMACION producto[], int &Indice);
 void buscarProducto (INFORMACION producto[], int &Indice);
 void eliminarProducto (INFORMACION producto[], int &Indice);
 
@@ -23,72 +23,85 @@ void agregarProducto(INFORMACION producto[], int &Indice)
 {
 	int cant;
 	system("cls");
-	cout << "        AGREGAR PRODUCTO\n";
-	cout << "Cuantos productos (diferentes) desea agregar: ";
+	cout << "================= AGREGAR PRODUCTO ===================" << endl;
+	cout << " Cuantos productos (diferentes) desea agregar?: ";
 	cin >> cant;
 	
-	for (int i=0; i<cant; i++){
+	for (int i = 0; i <cant; i++)
+	{
 		string nombreTemp;
-		system("cls");
-		cout << "        AGREGAR PRODUCTO\n";
-		cout<<"Ingrese nombre del producto "<< i+1 <<": ";
+		cout << "-----------------------------------------------------" << endl;
+		cout << "Ingrese nombre del producto "<< i + 1 << ": ";
 		cin.ignore();
-		getline(cin, nombreTemp);  //AGREGA getline PARA OVBIAR ESPACIADO !!!!!!!!!!!!
+		getline(cin, nombreTemp);
 		
 		bool encontrado = false;
 		int cantidadTemp;
 		
-		//Funcion para verificar si se REPITE el NOMBRE del producto
-		for (int j=0; j<Indice; j++){
-			if (nombreTemp == producto[j].nombre){
+		//Funcion para verificar si se REPITE el NOMBRE del producto precio
+		for (int j = 0; j < Indice; j++)
+		{
+			if (nombreTemp == producto[j].nombre)
+			{
 				encontrado = true;
-				cout<<"Ingrese cantidad: ";  //Si se repite, solo ingresa cantidad.
-				cin>> cantidadTemp;
-				producto[i].cantidad = producto[j].cantidad + cantidadTemp; // cambie i por j 
+				cout << " Ingrese cantidad: ";  //Si se repite, solo ingresa cantidad.
+				cin >> cantidadTemp;
+				producto[j].cantidad += cantidadTemp; // cambie i por j 
 			}
 		}
 		
-		if (!encontrado){
-			Indice = Indice + 1;
-			cout<<"Ingrese una descripcion: ";
+		if (!encontrado)
+		{
+			cout << " Ingrese una descripcion: ";
 			cin.ignore();
-			getline(cin, producto[i].descripcion);
+			getline(cin, producto[Indice].descripcion);
 			
-			cout<<"Ingrese un precio: ";
-			cin>>producto[i].precio;
+			cout<<" Ingrese una ID: ";
+			cin >> producto[Indice].ID;
 			
-			cout<<"Ingrese cantidad: ";
-			cin>> cantidadTemp;
+			cout<<" Ingrese cantidad: ";
+			cin >> cantidadTemp;
 			producto[i].cantidad = producto[i].cantidad + cantidadTemp;
+			Indice++;
 		}
-		
-		
-		
 	}
 }	
 
-void mostrarProducto (INFORMACION producto[], int Indice)
+void mostrarProducto (INFORMACION producto[], int &Indice)
 {
 	system("cls");
-	cout<<"         MOSTRAR PRODUCTO\n";
-	if (Indice == 0){
-		cout<<"\nAun no se registraron productos.\n";
+	cout << "================ MOSTRAR PRODUCTO ===================" << endl;
+	if (Indice == 0)
+	{
+		cout << " <<< Aun no se registraron productos. >>>" << endl;
 		system("pause");
 		return;
 	}
-	
+	else
+	{
+		cout << "-----------------------------------------------------" << endl;
+		cout << "                    Lista de productos" << endl;
+		cout << "-----------------------------------------------------" << endl;
+		cout << " ID | Nombre | Descripcion | Cantidad | Precio" << endl;
+		cout << "-----------------------------------------------------" << endl;
+		for (int i = 0; i < Indice; i++)
+		{
+			cout << producto[i].ID << " | " << producto[i].nombre << " | " << producto[i].descripcion << " | " << producto[i].cantidad << " | " << producto[i].ID << endl;
+		}
+		cout << "-----------------------------------------------------" << endl;
+	}
+	system("pause");
 }
 
 int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto)
 {
-	bool encontrado = false;
 	int medio;
-	while (bajo <= alto && !encontrado)
+	while (bajo <= alto)
 	{
 		medio = (bajo + alto) / 2;
 		if (producto[medio].nombre == nom)
 		{
-			encontrado = true;
+			return medio;
 		}
 		else if (producto[medio].nombre > nom)
 		{
@@ -99,87 +112,80 @@ int BusquedaBinaria(INFORMACION producto[], string nom, int bajo, int alto)
 			bajo = medio + 1;
 		}
 	}
-	if (encontrado)
-	return medio;
-	else 
-	return -1;
 }
 
 void buscarProducto (INFORMACION producto[], int &Indice)
 {
-	int opcion;
-	do 
+    system("cls");
+    cout << "================= BUSCAR PRODUCTO ===================" << endl;
+    cout << "Ingrese el nombre del producto: ";
+    string nomtemp;
+    cin.ignore();
+    getline(cin, nomtemp);
+    
+    ordenacion(producto, Indice); // Ordenar los productos antes de la búsqueda
+    int encontrado = BusquedaBinaria(producto, nomtemp, 0, Indice - 1);
+    
+    if (encontrado != -1) 
 	{
-		system("cls");
-		cout << "================= BUSCAR PRODUCTO ===================" << endl;
-		cout << " 1. Buscar por nombre " << endl;
-		cout << " 2. Buscar por ID " << endl;
-		cout << " 0. Salir " << endl;
-		cout << "-----------------------------------------------------" << endl;
-		cout << " Ingrese su opcion: ";
-		cin >> opcion;
-		string nom;
-		int encontrado = -1;
-		
-		switch (opcion)
-		{
-			case 1:
-				cout << "================= BUSCAR POR NOMBRE ===================" << endl;
-				cout << " Ingrese el nombre del producto: ";
-				cin >> nom;
-				cout << "-----------------------------------------------------" << endl;
-				encontrado = BusquedaBinaria(producto, nom, 0, Indice);
-				if (encontrado != -1)
-				{
-					cout << "Producto encontrado." << endl;
-					cout << "Nombre: " << producto[encontrado].nombre << endl;
-					cout << "Descripcion: " << producto[encontrado].descripcion << endl;
-					cout << "Precio: " << producto[encontrado].precio << endl;
-					cout << "Cantidad: " << producto[encontrado].cantidad << endl;
-				}
-				else
-				{
-					cout << "Producto no encontrado." << endl;
-				}
-				
-			break;
-			case 2:
-				cout << "hola" << endl; //relleno
-			break;
-			case 0:
-				cout << "Saliendo . . ." << endl;
-			break;
-			default:
-				cout << "Opcion no valida. Intentelo de nuevo." << endl;
-				system("pause");
-			break;
-		}
-	} while (opcion != 0);
+        cout << "Producto encontrado." << endl;
+        cout << "Nombre: " << producto[encontrado].nombre << endl;
+        cout << "Descripcion: " << producto[encontrado].descripcion << endl;
+        cout << "ID: " << producto[encontrado].ID << endl;
+        cout << "Cantidad: " << producto[encontrado].cantidad << endl;
+    } 
+	else 
+	{
+        cout << " <<< Producto no encontrado. >>>" << endl;
+    }
+    system("pause");
 }
 
 void eliminarProducto (INFORMACION producto[], int &Indice)
 {
 	int posicion;
+	system("cls");
 	cout << "================= ELIMINAR PRODUCTO ===================" << endl;
-	cout << "Ingrese la poscion del producto que desea eliminar: ";
+	cout << "Ingrese la poscion del producto que desea eliminar (1 a " << Indice << "): ";
 	cin >> posicion;
+	posicion--;
+
 	if (posicion >= 0 && posicion < Indice)
 	{
-		Indice--;
-		for (int i = posicion; i < Indice; i++)
+		for (int i = posicion; i < Indice - 1; i++)
 		{
 			producto[i] = producto[i + 1];
 		}
+		Indice--;
+		cout << "Producto eliminado con exito." << endl;
 	}
 	else
 	{
-		cout << "Posicion invalida. Intentelo de nuevo." << endl;
+		cout << " <<< Posicion invalida >>>" << endl;
+	}
+	system("pause");
+}
+
+void ordenacion(INFORMACION producto[], int &Indice)
+{
+	for (int i = 0; i < Indice - 1; i++)
+	{
+		for (int j = i + 1; j < Indice; j++)
+		{
+			if (producto[i].nombre > producto[j].nombre)
+			{
+				INFORMACION temp = producto[i];
+				producto[i] = producto[j];
+				producto[j] = temp;
+			}
+		}
 	}
 }
 
 int main(){
 	int opcion;
-	do {
+	do 
+	{
 		system("cls");
 		cout << "=====================================================" << endl;
 		cout << "                        MENU" << endl;
@@ -193,7 +199,8 @@ int main(){
 		cout << " Ingrese su opcion: ";
 		cin >> opcion;
 		
-		switch (opcion){
+		switch (opcion)
+		{
 			case 1:
 				agregarProducto(producto, Indice);
 			break;
@@ -211,10 +218,11 @@ int main(){
 				cout << "Saliendo . . ." << endl;
 			break;
 			default:
-				cout << "Opcion no valida. Intentelo de nuevo." << endl;
+				cout << " <<< Opcion no valida. Intentelo de nuevo. >>>" << endl;
 				system("pause");
 			break;
 		}
 	} while(opcion != 0);
+	
 	return 0;
 }
