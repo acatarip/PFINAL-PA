@@ -312,12 +312,13 @@ int main(){
 	{
 		system("cls");
 		cout << "=====================================================" << endl;
-		cout << "                        MENU" << endl;
+		cout << "                   GESTION DE RECUROS" << endl;
 		cout << "=====================================================" << endl;
 		cout << " 1. Agregar producto" << endl;
 		cout << " 2. Mostrar producto" << endl;
 		cout << " 3. Buscar producto" << endl;
 		cout << " 4. Eliminar producto" << endl;
+		cout << " 5. Modificar cantidad" << endl;
 		cout << " 0. Salir" << endl;
 		cout << "-----------------------------------------------------" << endl;
 		cout << " Ingrese su opcion: ";
@@ -337,6 +338,9 @@ int main(){
 			case 4:
 				eliminarProducto(producto, Indice);
 				break;
+			break;
+			case 5:
+				modificarCantidad(producto, Indice);
 			break;
 			case 0:
 				cout << "Saliendo . . ." << endl;
